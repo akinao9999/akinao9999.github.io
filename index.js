@@ -522,49 +522,50 @@ function initWorker(){
             case "buffer":
                 var node = model.nodes[e.data.node.id];
                 if(!node.mesh){
-                    if(wireframe && e.data.wireframe){
-                        var geometry = new THREE.BufferGeometry();
-                        geometry.setIndex( new THREE.BufferAttribute( e.data.buffer.index, 1 ) );
-                        geometry.addAttribute( 'position', new THREE.BufferAttribute( e.data.buffer.position, 3 ) );
-                        geometry.addAttribute( 'color', new THREE.BufferAttribute( e.data.buffer.color, 3 ) );
-                        var material = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
-                        node.mesh = new THREE.LineSegments( geometry, material );
-                        if(node.show){
+                    if(node.show){
+                        if(e.data.count.point==0){
+                            throw "ERR";
+                        }
+                        if(wireframe && e.data.wireframe){
+                            var geometry = new THREE.BufferGeometry();
+                            geometry.setIndex( new THREE.BufferAttribute( e.data.buffer.index, 1 ) );
+                            geometry.addAttribute( 'position', new THREE.BufferAttribute( e.data.buffer.position, 3 ) );
+                            geometry.addAttribute( 'color', new THREE.BufferAttribute( e.data.buffer.color, 3 ) );
+                            var material = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
+                            node.mesh = new THREE.LineSegments( geometry, material );
+                            scene.add(node.mesh);
                             node.count={
                                 point:e.data.count.point,
                                 line:e.data.count.line,
                                 triangle:0,
                             };
-                            scene.add(node.mesh);
                             count.point += node.count.point;
                             count.line += node.count.line;
                             count.triangle += node.count.triangle;
                         }
-                    }
-                    if(!wireframe && !e.data.wireframe){
-                        var geometry = new THREE.BufferGeometry();
-                        geometry.addAttribute( 'position', new THREE.BufferAttribute( e.data.buffer.position, 3 ) );
-                        geometry.addAttribute( 'color', new THREE.BufferAttribute( e.data.buffer.color, 3 ) );
-                        geometry.computeFaceNormals();
-                        var material = new THREE.MeshLambertMaterial({
-                            vertexColors: THREE.VertexColors,
-                            transparent: true, opacity: 0.8,
-                            side: THREE.FrontSide,
-                            wireframe:false });
-                        node.mesh = new THREE.Mesh( geometry, material );
-                        if(node.show){
+                        if(!wireframe && !e.data.wireframe){
+                            var geometry = new THREE.BufferGeometry();
+                            geometry.addAttribute( 'position', new THREE.BufferAttribute( e.data.buffer.position, 3 ) );
+                            geometry.addAttribute( 'color', new THREE.BufferAttribute( e.data.buffer.color, 3 ) );
+                            geometry.computeFaceNormals();
+                            var material = new THREE.MeshLambertMaterial({
+                                vertexColors: THREE.VertexColors,
+                                transparent: true, opacity: 0.8,
+                                side: THREE.FrontSide,
+                                wireframe:false });
+                            node.mesh = new THREE.Mesh( geometry, material );
+                            scene.add(node.mesh);
                             node.count={
                                 point:e.data.count.point,
                                 line:0,
                                 triangle:e.data.count.triangle,
                             };
-                            scene.add(node.mesh);
                             count.point += node.count.point;
                             count.line += node.count.line;
                             count.triangle += node.count.triangle;
                         }
+                        updateCount();
                     }
-                    updateCount();
                 }
                 break;
         }

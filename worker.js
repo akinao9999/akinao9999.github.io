@@ -252,6 +252,8 @@ function open_file(file){
 
 function createBuffer(node,wireframe){
 
+    node = model.nodes[node.id];
+
     if(wireframe){
         var positions=[];
         var indices_array=[];
