@@ -1,1 +1,21 @@
-Hello World
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <title>地形点群</title>
+  <script src="./jquery-2.2.2.min.js"></script>
+  <script src="./three.min.js"></script>
+  <script src="./OrbitControls.js"></script>
+  <script src="./index.js"></script>
+</head>
+<body onLoad="createScene();">
+  <section id="canvas" style="margin:0; overflow:hidden;position: absolute; left:0px; top:0px; width:100%; height:100%;z-index:-1"></section>
+    <div style="background-color:#FFF">
+        <input type="checkbox" id="wireframe">ワイヤーフレーム</input>
+        <input type="file" accept=".xyz" id="data_file" onchange="open_file();"></input>
+        <input type="range" min="0" max="2000" step="10" id="lod_range"></input>
+        <span>頂点数:</span><span id="count_point"></span>
+        <span>ライン数:</span><span id="count_line"></span>
+        <span>ポリゴン数:</span><span id="count_triangle"></span>
+    </div>
+</html>
