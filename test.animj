@@ -1,0 +1,28 @@
+{
+    "name": "My Animation",
+    "globalDuration": 0,
+    "tracks": [
+        {
+            "trackType": "Discrete",
+            "valueType": "float",
+            "data": {
+                "node": "Test",
+                "property": "Test",
+                "keyframes": [
+                    {
+                        "time": 0,
+                        "value": 1
+                    },
+                    {
+                        "time": 1,
+                        "value": 42
+                    },
+                    {
+                        "time": 5,
+                        "value": 20
+                    }
+                ]
+            }
+        }
+    ]
+ }
